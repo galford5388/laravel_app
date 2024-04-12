@@ -3,7 +3,7 @@ Prerequisites
 - Git
 - Your favorite IDE
 
-Local Development
+Local Development using docker compose # this will spine up a development webserver adn mysql
 1. git clone the repo
 2. cd laravel_app and add your .env    
 3. docker-compose up -d #it will spinup both front and backend livewire demo site
