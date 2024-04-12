@@ -1,0 +1,61 @@
+name: 'QA Terraform Deploy'
+
+on:
+  push:
+    branches: [ "qa" ]
+
+permissions:
+  contents: read
+  
+jobs:
+  terraform_qa:
+    name: 'QA Deploy'
+    runs-on: ubuntu-latest
+    environment: qa
+
+    ## Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v3
+          
+    
+    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+  
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        cli_config_credentials_token: ${{ secrets.CAPTION_SVC_DEV_TF_API_TOKEN }}
+    # Configuring the workspace and organization   
+    - name: Setup Org & Workspace
+      run: |
+        sed -i 's/ORGANIZATION/'${{ secrets.TF_ORGANIZATION }}'/g' variables.tf
+        sed -i 's/WORKSPACE/'${{ secrets.TF_WORKSPACE }}'/g' variables.tf
+        
+
+    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+    - name: Terraform Init
+      run: terraform init
+      
+    ## Set the current workspace to the desired workspace
+    - name: Set workspace
+      run: terraform workspace select "${{ secrets.TF_WORKSPACE }}"
+
+    # Checks that all Terraform configuration files adhere to a canonical format
+    #- name: Checking terraform workspace if correct
+    #  run: terraform fmt -check -recursive -diff
+      #run: terraform workspace list
+
+    # Generates an execution plan for Terraform
+    - name: Terraform Plan
+      run: terraform plan
+
+      # On workflow_dispatch in "main", build or change infrastructure according to Terraform configuration files
+      # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
+    - name: Terraform Apply
+      #if: github.ref == 'refs/heads/"main"' && github.event_name == 'workflow_dispatch'
+      run: terraform apply -auto-approve
