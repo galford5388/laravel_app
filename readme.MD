@@ -15,10 +15,11 @@ Local Development using docker compose # this will spin up a development webserv
 
 CI/CD Deployments
 
-1. A Terraform Cloud Account and Create API Token
-2. Create variables in Terraform Cloud # variables can be found on variables.tf
-3. A Github account
-4. Create Environment Secrets
+1. Create Terraform Cloud Account and Create API Token
+2. In your AWS account create secret key and access key and paste it in your Terraform Cloud variables as hidden secrets.
+3. Create variables in Terraform Cloud # variables can be found on variables.tf
+4. A Github account
+5. Create Environment Secrets according to your specific Terraform cloud environment workspace.
 
 How the CI/CD Works is that 
 there are 3 Environments Secrets in Github that holds 
