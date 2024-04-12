@@ -8,7 +8,7 @@ Local Development
 2. cd laravel_app     
 3. docker-compose up -d #it will spinup both front and backend livewire demo site
 4. docker exec laravel_container php artisan migrate   # it will run the migration
-5. docker exec laravel_container php artisan db:seed
+5. docker exec laravel_container php artisan db:seed   # it will run the seeding
 
 CI/CD Deployments
 
