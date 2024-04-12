@@ -15,7 +15,7 @@ Local Development using docker compose # this will spin up a development webserv
 CI/CD Deployments
 
 1. A Terraform Cloud Account and Create API Token
-2. Create variables # variables can be found on variables.tf
+2. Create variables in Terraform Cloud # variables can be found on variables.tf
 3. A Github account
 4. Create Environment Secrets
 
