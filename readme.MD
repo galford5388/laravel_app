@@ -7,10 +7,11 @@ Local Development using docker compose # this will spin up a development webserv
 #note: you can modify this on docker-compose.yml
 
 1. git clone the repo
-2. cd laravel_app and add your .env    
-3. docker-compose up -d #it will spinup both front and backend livewire demo site
-4. docker exec laravel_container php artisan migrate   # it will run the migration
-5. docker exec laravel_container php artisan db:seed   # it will run the seeding
+2. cd laravel_app and add your .env  
+3. docker build -t ryanc-laravel . # this will build the image  
+4. docker-compose up -d #it will spinup both front and backend livewire demo site
+5. docker exec laravel_container php artisan migrate   # it will run the migration
+6. docker exec laravel_container php artisan db:seed   # it will run the seeding
 
 CI/CD Deployments
 
