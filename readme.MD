@@ -28,7 +28,7 @@ master=production
 dev=development
 uat=qa
 
-Environment Secrets
+Environment Secrets  #testing is on the last part of pipeline to check the status code
 DEV it will run on every commits
 UAT it will run on every commits
 PROD   # requires pipeline approval and MR request
