@@ -3,7 +3,7 @@ Prerequisites
 - Git
 - Your favorite IDE
 
-Local Development using docker compose # this will spine up a development webserver and mysql
+Local Development using docker compose # this will spin up a development webserver and mysql
 #note: you can modify this on docker-compose.yml
 
 1. git clone the repo
