@@ -44,7 +44,7 @@ variable "db_instance_class" {
 variable "db_engine_version" {
   description = "Database engine version"
   type        = string
-  default     = "5.7"
+  default     = "8.0"
 }
 
 variable "db_username" {
