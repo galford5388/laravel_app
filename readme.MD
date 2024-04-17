@@ -20,7 +20,7 @@ Local Development using docker compose # this will spin up a development webserv
 10. docker logs -f <name of container> to check the container logs
 11. docker exec -ti <container_id> bash    # this is where you can find the location of the app and navigate within the container 
 
-CI/CD Deployments
+CI/CD Deployments   #see attached pdf
 
 1. Create Terraform Cloud Account and Create API Token
 2. In your AWS account create secret key and access key and paste it in your Terraform Cloud variables as hidden secrets.
