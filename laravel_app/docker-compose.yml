@@ -7,17 +7,19 @@ services:
     ports:
       - "80:80" 
     depends_on:
-      - db
+      - db 
     environment:
       DB_HOST: db
       DB_DATABASE: laravel
       DB_USERNAME: root
       DB_PASSWORD: 
   db:
-    image: mysql:5.7
+    image: mysql   #always pull the latest mysql
     ports:
       - "3306:3306"
     environment:
       MYSQL_DATABASE: laravel
       MYSQL_ROOT_PASSWORD:
       MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+    volumes:
+      - ./db_data:/var/lib/mysql  

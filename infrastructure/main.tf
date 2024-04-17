@@ -6,6 +6,11 @@ resource "aws_ecr_repository" "my_repository" {
 
 resource "aws_ecs_cluster" "my_cluster" {
   name = "my-cluster"
+
+  setting {
+    name  = "containerInsights"
+    value = "enabled"
+  }
 }
 
 resource "aws_lb" "my_alb" {
@@ -47,7 +52,15 @@ resource "aws_ecs_task_definition" "my_task_definition" {
         "hostPort": 80,
         "protocol": "tcp"
       }
-    ]
+    ],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "${aws_cloudwatch_log_group.ecs_logs.name}",
+        "awslogs-region": "${var.aws_region}",
+        "awslogs-stream-prefix": "ecs"
+      }
+    }
   }
 ]
 DEFINITION
@@ -83,3 +96,41 @@ resource "aws_db_instance" "my_rds_instance" {
   password            = var.db_password
   publicly_accessible = false
 }
+
+resource "aws_cloudwatch_log_group" "ecs_logs" {
+  name              = "/aws/ecs/${aws_ecs_cluster.my_cluster.name}"
+  retention_in_days = 7 # Adjust retention as needed
+}
+
+resource "aws_cloudwatch_log_stream" "ecs_stream" {
+  name           = "ecs"
+  log_group_name = aws_cloudwatch_log_group.ecs_logs.name
+}
+
+resource "aws_cloudwatch_log_group" "rds_logs" {
+  name              = "/aws/rds/${aws_db_instance.my_rds_instance.identifier}/audit"
+  retention_in_days = 7 # Adjust retention as needed
+}
+
+resource "aws_cloudwatch_log_stream" "rds_stream" {
+  name           = "rds"
+  log_group_name = aws_cloudwatch_log_group.rds_logs.name
+}
+
+# Add AWS VPN Client
+resource "aws_ec2_client_vpn_endpoint" "my_vpn_endpoint" {
+  client_cidr_block      = "10.50.0.0/16"                                          # Specify your client CIDR block
+  server_certificate_arn = "arn:aws:acm:us-west-2:123456789012:certificate/abc123" # Replace with your ACM certificate ARN
+  authentication_options {
+    type                       = "certificate-authentication"
+    root_certificate_chain_arn = "arn:aws:acm:us-west-2:123456789012:certificate/def456" # Replace with your root certificate ARN
+  }
+  connection_log_options {
+    enabled                    = true
+    cloudwatch_log_group_name  = "my_vpn_logs" # Specify your CloudWatch log group name
+    cloudwatch_log_stream_name = "vpn_stream"  # Specify your CloudWatch log stream name
+  }
+  client_connection_logging = "enabled"
+}
+
+

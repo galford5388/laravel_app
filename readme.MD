@@ -4,14 +4,21 @@ Prerequisites
 - Your favorite IDE
 
 Local Development using docker compose # this will spin up a development webserver and mysql
-#note: you can modify this on docker-compose.yml
-
+#note: you can modify this on docker-compose.yml the location of the app can be found on the Dockerfile
+       within this directory the mysql container only mounts the volume but the app itself is not as the
+       Dockerfile holds the volume and builds.
+       
 1. git clone the repo
 2. cd laravel_app and add your .env  
-3. docker build -t ryanc-laravel . # this will build the image  
+3. docker build -t ryanc-laravel . # this will build the image came from Dockerfile
 4. docker-compose up -d #it will spinup both front and backend livewire demo site
 5. docker exec laravel_container php artisan migrate   # it will run the migration
 6. docker exec laravel_container php artisan db:seed   # it will run the seeding
+7. Access your the app to http://localhost
+8. docker ps # this will check if the app is running it must be a 2 container running locally
+9. docker compose down  # to stop the app
+10. docker logs -f <name of container> to check the container
+11. docker exec -ti <container_id> bash    # this is where you can find the location of the app and navigate within the container 
 
 CI/CD Deployments
 

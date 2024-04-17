@@ -15,6 +15,11 @@ provider "aws" {
   region = "us-east-1"
 }
 
+variable "aws_region" {
+  description = "List of subnet IDs for ALB and ECS service"
+  type        = string
+}
+
 variable "subnet_ids" {
   description = "List of subnet IDs for ALB and ECS service"
   type        = list(string)
