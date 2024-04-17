@@ -133,4 +133,16 @@ resource "aws_ec2_client_vpn_endpoint" "my_vpn_endpoint" {
   client_connection_logging = "enabled"
 }
 
+# Add Synthetics Canaries
+resource "aws_synthetics_canary" "some" {
+  name                 = "some-canary"
+  artifact_s3_location = "s3://some-bucket/"
+  execution_role_arn   = "some-role"
+  handler              = "exports.handler"
+  zip_file             = "test-fixtures/lambdatest.zip"
+  runtime_version      = "syn-nodejs-puppeteer-7.0"
 
+  schedule {
+    expression = "rate(0 minute)"
+  }
+}
