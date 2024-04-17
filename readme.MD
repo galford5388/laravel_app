@@ -17,8 +17,8 @@ Local Development using docker compose # this will spin up a development webserv
 7. Access your app to http://localhost
 8. docker ps # this will check if the app is running it must be a 2 container running locally
 9. docker compose down  # to stop the app
-10. docker logs -f <name of container> to check the container logs
-11. docker exec -ti <container_id> bash    # this is where you can find the location of the app and navigate within the container 
+10. docker logs -f "<name of container>" to check the container logs
+11. docker exec -ti "<container_id>" bash    # this is where you can find the location of the app and navigate within the container 
 
 CI/CD Deployments   #see attached pdf
 
